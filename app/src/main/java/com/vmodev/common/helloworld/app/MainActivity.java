@@ -33,30 +33,29 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Log.i("onClick", " click to login button");
-                if (editPassword.getText().equals("admin") && editUser.getText().equals("admin")) {
-                    //TODO: request to server and submit user name
-                    LoginRequest request = new LoginRequest(
-                            editUser.getText().toString(),
-                            editPassword.getText().toString()
-                    );
 
-                    //spiceManager.start(this);
-                    //spiceManager.shouldStop();
-                    spiceManager.execute(request, new RequestListener<LoginRequestResponse>() {
+                //TODO: request to server and submit user name
+                LoginRequest request = new LoginRequest(
+                        editUser.getText().toString(),
+                        editPassword.getText().toString()
+                );
 
-                        @Override
-                        public void onRequestFailure(SpiceException e) {
-                            Log.d(Constant.TAG, String.format("error, failed to retrieve category %s", e.toString()));
+                //spiceManager.start(this);
+                //spiceManager.shouldStop();
+                spiceManager.execute(request, new RequestListener<LoginRequestResponse>() {
+
+                    @Override
+                    public void onRequestFailure(SpiceException e) {
+                        Log.d(Constant.TAG, String.format("error, failed to retrieve category %s", e.toString()));
+                    }
+
+                    @Override
+                    public void onRequestSuccess(LoginRequestResponse response) {
+                        if (response.success) {
+                            Log.d(Constant.TAG, "ok");
                         }
-
-                        @Override
-                        public void onRequestSuccess(LoginRequestResponse response) {
-                            if (response.success) {
-                                Log.d(Constant.TAG, "ok");
-                            }
-                        }
-                    });
-                }
+                    }
+                });
             }
         });
     }
